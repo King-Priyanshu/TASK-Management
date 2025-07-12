@@ -30,7 +30,7 @@ A Django-based Task Management Web App with:
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/yourusername/taskmanager.git
-cd taskmanager
+git clone https://github.com/King-Priyanshu/Task-Manager.git
+cd TaskManager
 pip install -r requirements.txt
 python manage.py runserver
