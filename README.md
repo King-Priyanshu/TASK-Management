@@ -25,7 +25,7 @@ A Django-based Task Management Web App with:
 ![Dark Mode](/tm/media/dark.png)
 
 ### Description
-![Description](/tm/media/dec.png)
+![Description](/tm/media/dic.png)
 
 ## 🚀 Getting Started
 
