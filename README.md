@@ -16,7 +16,7 @@ A Django-based Task Management Web App with:
 ## 📸 Screenshots
 
 ### Home Page
-![Home](media/home.png)
+![Home](/tm/media/home.png)
 
 ### statistics
 ![statistic](media/stat.png)
