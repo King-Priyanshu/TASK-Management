@@ -5,13 +5,13 @@ A Django-based Task Management Web App with:
 - OTP-based Signup
 - Task CRUD (Create, Read, Update, Delete)
 - Task statistics with Pie Chart
-- Dark Mode Toggle
-- Responsive UI
+- Dark Mode
+- Responsive
 
 ## 🔧 Tech Stack
 - Django
 - HTML/CSS
-- Chart.js
+- js
 
 ## 📸 Screenshots
 
