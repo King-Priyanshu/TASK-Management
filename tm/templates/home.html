@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="{% static 'home.css' %}" />
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <button class="nav-btn" onclick="window.location.href='{% url 'myapp:table' %}'">📋 All Tasks</button>
+    <button class="nav-btn" onclick="window.location.href='{% url 'myapp:discription_view' %}'">📜 Description</button>
+    <button class="nav-btn" onclick="window.location.href='{% url 'myapp:stat' %}'">📊 Statistics</button>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <!-- Header -->
+    <header>
+      <h2>👤 {{ user.user_name }}</h2>
+      <h2>Daily Tasks</h2>
+      <div class="header-buttons">
+        <button onclick="openModal('addTaskModal')">Add Task</button>
+        <form method="POST" action="{% url 'myapp:logout' %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" style="background-color:#ef4444;">Logout</button>
+        </form>
+
+        <button class="toggle-mode" onclick="toggleDarkMode()">🌙</button>
+      </div>
+    </header>
+
+    <!-- Cards -->
+    <div class="cards">
+      <div class="card completed">
+        <h3>✅ Completed Tasks</h3>
+        <h4 id="completed-count">0</h4>
+      </div>
+      <div class="card pending">
+        <h3>⏳ Pending Tasks</h3>
+        <h4 id="pending-count">0</h4>
+      </div>
+      <div class="card total">
+        <h3>📌 Total Tasks</h3>
+        <h4 id="total-count">0</h4>
+      </div>
+    </div>
+
+
+    <!-- Table -->
+      {% include current_page %}
+
+        <!-- Add Task Modal -->
+    <div id="addTaskModal" class="modal-overlay">
+      <div class="modal">
+        <h2>Add Task</h2>
+        <form method="POST" action="{% url 'myapp:addTask' %}">
+          {% csrf_token %}
+          <input type="text" name="title" placeholder="Task Title" required />
+          <textarea name="description" placeholder="Description"></textarea>
+          <input type="datetime-local" name="due_date" />
+          <button type="submit">Add</button>
+          <button type="button" onclick="closeModal('addTaskModal')">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JavaScript -->
+  <script>
+
+  function toggleDarkMode() {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+
+    const btn = document.querySelector('.toggle-mode');
+    btn.textContent = isDark ? '🌞' : '🌙';
+  }
+
+  // Load theme on page load
+  document.addEventListener("DOMContentLoaded", function () {
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode === 'enabled') {
+      document.body.classList.add('dark');
+      const btn = document.querySelector('.toggle-mode');
+      if (btn) btn.textContent = '🌞';
+    }
+  });
+
+
+
+    function openEditModal(id, title, description, dueDate) {
+      document.querySelector('#editTaskModal input[name="task_id"]').value = id;
+      document.querySelector('#editTaskModal input[name="title"]').value = title;
+      document.querySelector('#editTaskModal textarea[name="description"]').value = description;
+      document.querySelector('#editTaskModal input[name="due_date"]').value = dueDate;
+      openModal('editTaskModal');
+    }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+  async function fetchTaskData() {
+    try {
+      const response = await fetch("{% url 'myapp:get_task_data' %}");
+      const result = await response.json();
+      const data = result.task_data;
+
+      // Update values in the DOM
+      document.getElementById('completed-count').textContent = data.completed_count;
+      document.getElementById('pending-count').textContent = data.pending_count;
+      document.getElementById('total-count').textContent = data.total_tasks;
+    } catch (error) {
+      console.error('Failed to fetch task data:', error);
+    }
+  }
+
+  // Call once when page loads
+  fetchTaskData();
+
+
+</script>
+
+
+</body>
+</html>

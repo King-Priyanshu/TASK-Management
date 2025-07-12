@@ -1,0 +1,50 @@
+{% block content %}
+<div class="stats-container">
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3 class="chart-title">📊 Task Completion (Bar Chart)</h3>
+      <img src="{{ bar_chart_url }}" alt="Bar Chart" class="chart-img" />
+    </div>
+
+    <div class="chart-card">
+      <h3 class="chart-title">🍩 Task Summary (Donut Chart)</h3>
+      <img src="{{ donut_chart_url }}" alt="Donut Chart" class="chart-img" />
+    </div>
+  </div>
+</div>
+
+<style>
+.stats-container {
+  padding: 20px;
+}
+
+.chart-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.chart-card {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.chart-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.chart-title {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+</style>
+{% endblock %}

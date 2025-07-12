@@ -1,0 +1,73 @@
+
+    
+    <div style="overflow-y: auto; max-height: 600px;">
+      <table class="todo-table">
+        <thead>
+          <tr>
+            <th>Done</th>
+            <th>Task</th>
+            <th>Start</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in tasks %}
+          <tr>
+            <td>
+              <form method="POST" action="{% url 'myapp:toggleTaskCompletion' %}">
+                {% csrf_token %}
+                <input type="hidden" name="task_id" value="{{ task.id }}">
+                <input type="checkbox" onchange="this.form.submit()" {% if task.completed %}checked{% endif %} />
+              </form>
+
+            </td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.created_at }}</td>
+            <td>{{ task.due_date }}</td>
+            <td>
+              {% if task.completed %}
+                <span class="badge badge-completed" style="background: #20fa15; color: #1f2937;">Completed</span>
+              {% else %}
+                <span class="badge badge-pending">Pending</span>
+              {% endif %}
+            </td>
+            <td>
+              <button class="btn-edit"
+                onclick="openEditModal('{{ task.id }}', '{{ task.title }}', '{{ task.description|escapejs }}', '{{ task.due_date|date:'Y-m-d\\TH:i' }}')">
+                Edit
+              </button>
+            </td>
+            <td>
+                <form method="POST" action="{% url 'myapp:deleteTask' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="task_id" value="{{ task.id }}">
+                  <button type="submit" class="btn-delete">Delete</button>
+                </form>
+
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <!-- Edit Task Modal -->
+    <div id="editTaskModal" class="modal-overlay">
+      <div class="modal">
+        <h2>Edit Task</h2>
+        <form method="POST" action="{% url 'myapp:editTask' %}">
+          {% csrf_token %}
+          <input type="hidden" name="task_id" />
+          <input type="text" name="title" placeholder="Task Title" required />
+          <textarea name="description" placeholder="Description"></textarea>
+          <input type="datetime-local" name="due_date" />
+          <button type="submit">Update</button>
+          <button type="button" onclick="closeModal('editTaskModal')">Cancel</button>
+        </form>
+      </div>
+    </div>

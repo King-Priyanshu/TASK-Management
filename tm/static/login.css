@@ -1,0 +1,64 @@
+    body {
+      background: linear-gradient(to right, #f8fafc, #e0f7fa);
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-label {
+      font-weight: 600;
+    }
+
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .otp-input {
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      font-size: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      transition: all 0.2s ease;
+    }
+
+    .otp-input:focus {
+      border-color: #0d6efd;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+    }
+
+    .submit-button {
+      width: 100%;
+      margin-bottom: 0.75rem;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .login-link a {
+      font-weight: bold;
+      color: #0d6efd;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }

@@ -1,0 +1,124 @@
+
+
+{% block content %}
+<div class="task-list-grid">
+  {% for task in tasks %}
+    <div class="task-card-square {% if task.completed %}done{% else %}pending{% endif %}">
+      <h3 class="task-title">{{ task.title }}</h3>
+      <p class="task-desc">{{ task.description }}</p>
+      <div class="task-bottom">
+        <span class="due">📅 {{ task.due_date|date:"Y-m-d H:i" }}</span>
+        <span class="status-badge {% if task.completed %}badge-done{% else %}badge-pending{% endif %}">
+          {% if task.completed %}Completed{% else %}Pending{% endif %}
+        </span>
+      </div>
+    </div>
+  {% empty %}
+    <p>No tasks available.</p>
+  {% endfor %}
+</div>
+
+<style>
+  .task-list-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: flex-start;
+  }
+
+  .task-card-square {
+    background-color: var(--card-bg);
+    width: 240px;
+    height: 220px;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 6px solid transparent;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .task-card-square.animate-in {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .task-card-square.done {
+    border-left-color: #22c55e;
+    background-color: #dcfce7;
+  }
+
+  .task-card-square.pending {
+    border-left-color: #eab308;
+    background-color: #fef9c3;
+  }
+
+  .task-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .task-desc {
+    font-size: 14px;
+    color: #4b5563;
+    flex-grow: 1;
+  }
+
+  .task-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .due {
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .status-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .badge-pending {
+    background: #facc15;
+    color: #1f2937;
+  }
+
+  .badge-done {
+    background: #22c55e;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".task-card-square");
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        card.classList.add("animate-in");
+      }, index * 100); // stagger for effect
+    });
+  });
+</script>
+{% endblock %}
