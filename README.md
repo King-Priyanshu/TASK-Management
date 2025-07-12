@@ -19,13 +19,13 @@ A Django-based Task Management Web App with:
 ![Home](/tm/media/home.png)
 
 ### statistics
-![statistic](media/stat.png)
+![statistic](/tm/media/stat.png)
 
 ### Dark Mode
-![Dark Mode](media/dark.png)
+![Dark Mode](/tm/media/dark.png)
 
 ### Description
-![Description](media/dec.png)
+![Description](/tm/media/dec.png)
 
 ## 🚀 Getting Started
 
