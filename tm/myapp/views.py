@@ -76,6 +76,7 @@ def signup(request):
 
 
 
+
 def send_otp(request):
     if request.method == 'POST':
         email = request.POST.get('email', '')
@@ -99,14 +100,20 @@ def send_otp(request):
                 send_mail(
                     subject,
                     message,
-                    'your_email@gmail.com',  # Sender email
+                    "kingprincepriyanshu1138@gmail.com",
                     [email],  # Recipient email
                     fail_silently=False,
                 )
                 return JsonResponse({'status': 'success', 'message': 'OTP sent successfully!'})
-
             except Exception as e:
                 print(e)
+                return JsonResponse({'status': 'error', 'message': 'Failed to send OTP.'})
+
+        return JsonResponse({'status': 'error', 'message': 'Email and username required.'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+
 
 
 def loginPage(request):
